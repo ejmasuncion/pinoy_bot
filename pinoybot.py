@@ -14,14 +14,12 @@ from typing import List
 from sklearn import tree
 import numpy as np
 
-FILIPINO_BIGRAMS = ['ng', 'ka', 'in', 'ay', 'um', 'mag', 'nag', 'may', 'na', 'sa', 'ol','nya']
-ENGLISH_BIGRAMS = ['th', 'sh', 'ch', 'wh', 'ed', 'ly', 'er', 'es', 'ou', 'ea', 'io', 'al', 'is', 'at', 'an', 'he', 'lk', 'tr']
-
-def count_filipino_bigrams(word: str, target_bigrams: list) -> int:
+def count_filipino_bigrams(word: str) -> int:
+    filipino_bigrams = ['ng', 'ka', 'in', 'ay', 'um', 'mag', 'nag', 'may', 'na', 'sa', 'ol','nya']
     word_lower = str(word).lower()
     total_count = 0
     
-    for bigram in target_bigrams:
+    for bigram in filipino_bigrams:
         total_count += word_lower.count(bigram)
             
     return total_count
@@ -38,11 +36,12 @@ def vowel_word_ratio_feature(word):
         return 1.0 if num_vowels > 0 else 0.0
     return num_vowels / num_consonants
 
-def count_english_bigrams(word: str, target_bigrams: list) -> int:
+def count_english_bigrams(word: str) -> int:
+    english_bigrams = ['th', 'sh', 'ch', 'wh', 'ed', 'ly', 'er', 'es', 'ou', 'ea', 'io', 'al', 'is', 'at', 'an', 'he', 'lk', 'tr']
     word_lower = str(word).lower()
     total_count = 0
     
-    for bigram in target_bigrams:
+    for bigram in english_bigrams:
         # Count all non-overlapping occurrences of the bigram in the word
         total_count += word_lower.count(bigram)
             
@@ -88,8 +87,8 @@ def tag_language(tokens: List[str]) -> List[str]:
         word = str(token)
         
         # Calculate all features for the current token
-        filipino_bigram_count = count_filipino_bigrams(word, FILIPINO_BIGRAMS)
-        english_bigram_count = count_english_bigrams(word, ENGLISH_BIGRAMS)
+        filipino_bigram_count = count_filipino_bigrams(word)
+        english_bigram_count = count_english_bigrams(word)
         vowel_word_ratio = vowel_word_ratio_feature(word)
         has_foreign_alphabet = check_foreign_alphabet(word)
         has_tagalog_xfix = tagalog_xfix_check(word)
