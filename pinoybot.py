@@ -121,4 +121,4 @@ if __name__ == "__main__":
     example_tokens = ["Love", "kita", "."]
     print("Tokens:", example_tokens)
     tags = tag_language(example_tokens)
-    print(tags)
+    print("Tags:", tags)
