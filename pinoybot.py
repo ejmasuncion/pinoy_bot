@@ -76,24 +76,21 @@ def tag_language(tokens: List[str]) -> List[str]:
     # 1. Load your trained model from disk (e.g., using pickle or joblib)
     #    Example: with open('trained_model.pkl', 'rb') as f: model = pickle.load(f)
     #    (Replace with your actual model loading code)
-    with open('my_model.pkl', 'rb') as f:
+    with open('decision_tree_model.pkl', 'rb') as f:
         model = pickle.load(f)
 
     # 2. Extract features from the input tokens to create the feature matrix
     #    Example: features = ... (your feature extraction logic here)
     features = []
     for token in tokens:
-        # Ensure the token is treated as a string, especially for punctuation/numbers
         word = str(token)
-        
-        # Calculate all features for the current token
+
         filipino_bigram_count = count_filipino_bigrams(word)
         english_bigram_count = count_english_bigrams(word)
         vowel_word_ratio = vowel_word_ratio_feature(word)
         has_foreign_alphabet = check_foreign_alphabet(word)
         has_tagalog_xfix = tagalog_xfix_check(word)
         
-        # Combine into a feature vector (must match the order used during training!)
         feature_vector = [
             has_tagalog_xfix,
             vowel_word_ratio,
